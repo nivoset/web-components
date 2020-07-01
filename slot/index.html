@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Basic Slots</title>
+      <script type="module" src="/menu/menu.js"></script>
+      <script src="./slot.js"></script>
+   </head>
+   <body>
+      <template id="element-details-template">
+         <style>
+            .border {
+               background-color: #ddd;
+            }
+            span {
+               color: #ddd;
+            }
+         </style>
+         <div class="border">
+            <slot></slot>
+         </div>
+      </template>
+      <menu-bar>
+         <slotted-element>
+            <span>It is something!</span>
+         </slotted-element>
+      </menu-bar>
+   </body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="module" src="/menu/menu.js"></script>
+        <script type="module" src="./attribute-input.js"></script>
+        <title>Web-components and examples</title>
+    </head>
+    <body>
+        <menu-bar>
+            <h1>Attributes in work!</h1>
+            <attribute-input value="3" color="red" onclick="reset()"></attribute-input>
+            <button onclick="alterSize()">Increment</button>
+            <button onclick="alterColor()">set color to blue</button>
+        </menu-bar>
+    </body>
+    <script>
+        const alterSize = () => {
+            const attribute = document.querySelector("attribute-input")
+            attribute.setAttribute("value", `${parseInt(attribute.value) + 1}`)
+        }
+        const alterColor = () => {
+            document.querySelector("attribute-input").color = "blue";
+        }
+        const reset = () => {
+            const attribute = document.querySelector("attribute-input")
+            attribute.value = "1";
+            attribute.color = "red";
+        }
+    </script>
+</html>
