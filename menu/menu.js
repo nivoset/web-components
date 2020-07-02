@@ -1,7 +1,7 @@
 import style from "./menu-style.js";
 
 const menuItems = [
-	{ address: "/basic/index.html", label: "Attributes" },
+	{ address: "/attribute-input/index.html", label: "Attributes" },
 	{ address: "/template/index.html", label: "Template" },
 	{ address: "/slot/index.html", label: "Slot" },,
 	{ address: "/template-rotation/index.html", label: "Template-rotation" },

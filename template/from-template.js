@@ -4,7 +4,6 @@ class FromTemplate extends HTMLElement {
 		super();
 		let template = document.getElementById('my-paragraph');
 		let templateContent = template.content;
-
 		this.attachShadow({mode: 'open'})
 			.appendChild(templateContent.cloneNode(true));
 	}

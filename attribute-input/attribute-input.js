@@ -13,7 +13,7 @@ customElements.define('attribute-input',
         this.setAttribute('value', newValue);
     }
     get color() {
-        return this.getAttribute('color') || "black";
+        return this.getAttribute('color') || "#b81568";
     }
       
     set color(newValue) {

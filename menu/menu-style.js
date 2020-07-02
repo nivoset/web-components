@@ -18,10 +18,10 @@ export default `
             border-radius: 5px;
             transition: 0.3s ease;
         }
-        #bar1{
+        #bar1 {
             transform: translateY(-4px);
         }
-        #bar3{
+        #bar3 {
             transform: translateY(4px);
         }
         .nav li a{
