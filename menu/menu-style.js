@@ -1,9 +1,5 @@
 export default `
     <style scoped>
-        root{
-            font-family: 'PT Sans',sans-serif;
-            background-color: #373c56;
-        }
         #menu{
             width: 35px;
             height: 30px;
@@ -13,7 +9,7 @@ export default `
         .bar{
             height: 5px;
             width: 100%;
-            background-color: #b81568;
+            background-color: #22303f;
             display: block;
             border-radius: 5px;
             transition: 0.3s ease;
@@ -51,7 +47,7 @@ export default `
             width: 0;
             height: 0;
             margin: 30px 0 20px 20px;
-            background: radial-gradient(circle,#e94498,#b81568);
+            background: radial-gradient(circle,#2c3e50,#22303f);
             border-radius: 50%;
             transition: 0.3s ease;
         }
