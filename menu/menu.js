@@ -4,8 +4,9 @@ const menuItems = [
 	{ address: "/attribute-input/index.html", label: "Attributes" },
 	{ address: "/template/index.html", label: "Template" },
 	{ address: "/slot/index.html", label: "Slot" },,
-	{ address: "/template-rotation/index.html", label: "Template-rotation" },
+	{ address: "/css-effects/index.html", label: "css-effects" },
 	{ address: "/slot-advanced/index.html", label: "Advanced Slot" },
+	{ address: "/template-card/index.html", label: "Card Template" },
 ]
 
 customElements.define('menu-bar',

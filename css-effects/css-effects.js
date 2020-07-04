@@ -1,4 +1,4 @@
-customElements.define('template-rotation',
+customElements.define('css-effects',
   class extends HTMLElement {
     constructor() {
       super();
