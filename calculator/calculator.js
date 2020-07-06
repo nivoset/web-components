@@ -9,6 +9,7 @@ export default class {
       const { key } = event.detail;
       switch (key) {
         case "=":
+          console.log("equals");
           this.equals(); 
           break;
         case "%":
@@ -22,8 +23,8 @@ export default class {
           break;
         case "+": 
         case "-": 
-        case "/": 
-        case "X": 
+        case "÷": 
+        case "x": 
           this.setOperator(key);
           break;
         case "+/-":
@@ -61,14 +62,11 @@ export default class {
     this.fireUpdate(digit);
   }
   addDot() {
-    return () => {
-      if (!this.current.includes('.')) {
-        if (this.current === '0') {
-          this.clearOnType = false;
-        }
-        this.fireUpdate(".")
-        this.addDigit('.');
+    if (!this.current.includes('.')) {
+      if (this.current === '0') {
+        this.clearOnType = false;
       }
+      this.addDigit('.');
     }
   }
   setOperator(operation) {

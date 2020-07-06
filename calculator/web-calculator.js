@@ -6,36 +6,29 @@ class WebCalculator extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open"});
-    this.render();
     this.calculator = new Calculator(this.onUpdate());
+    this.render();
   }
-  static get observedAttributes() { return ["theme", "layout"]; }
+  static get observedAttributes() { return ["value", "theme", "layout"]; }
   attributeChangedCallback (name, oldValue, newValue) {
     console.log(`${name} changed from ${oldValue} to ${newValue}`);
     this.render();
   }
-  get value () { return this.getAttribute("value") || "0"}
   set value (newValue) { this.setAttribute("value", newValue) }
+  get value () { return this.getAttribute("value") || "0"}
 
-  get theme () { return this.getAttribute("theme") || "light"}
   set theme (newValue) { this.setAttribute("theme", newValue) }
+  get theme () { return this.getAttribute("theme") || "light"}
 
-  get layout () { return this.getAttribute("layout") || "standard"}
   set layout (newValue) { this.setAttribute("layout", newValue) }
+  get layout () { return this.getAttribute("layout") || "standard"}
 
-  connectedCallback() { 
-    console.log("Calculator added")
-    
-    this.shadowRoot
-      .querySelectorAll("calc-button")
-      .forEach(elem => elem.addEventListener("custom-event", (this.calculator.keyEvent)));
-  }
+  connectedCallback() { console.log("Calculator added")}
   disconnectedCallback() { console.log("Calculator removed")}
 
   onUpdate() {
-    const display = this.shadowRoot.querySelector("calc-display")
     return (value, change) => {
-      display.value = value;
+      this.value = value;
       this.dispatchEvent(new CustomEvent("update", {
         detail: {
           change,
@@ -46,7 +39,6 @@ class WebCalculator extends HTMLElement {
   }
 
   render() {
-    console.log(`${this.theme}\t${this.layout}\t${this.value}`)
     this.shadowRoot.innerHTML = `
       <div id="calculator" class="${this.theme} ${this.layout}">
         <calc-display id="display"  value="${this.value}"></calc-display>
@@ -56,8 +48,8 @@ class WebCalculator extends HTMLElement {
 
         <calc-button id="plus"      value="+" operator></calc-button>
         <calc-button id="minus"     value="-" operator></calc-button>
-        <calc-button id="multiply"  value="X" operator></calc-button>
-        <calc-button id="divide"    value="/" operator></calc-button>
+        <calc-button id="multiply"  value="x" operator></calc-button>
+        <calc-button id="divide"    value="÷" operator></calc-button>
 
         <calc-button id="dot"       value="." operator></calc-button>
         <calc-button id="equal"     value="=" operator></calc-button>
@@ -122,19 +114,20 @@ class WebCalculator extends HTMLElement {
         }
         .long {
           width: 500px;
-          grid-template-columns: repeat(4, 1fr);
+          grid-template-columns: repeat(5, 1fr);
           grid-template-areas:
             "disp disp disp disp disp"
             "sevn eght nine clr  perc"
             "four five six  mult divd"
             "one  two  thre plus minus"
-            "zero zero dot  eql  eql "
+            "sign zero dot  eql  eql "
         }
         #display { grid-area: disp; }
         #divide { grid-area: divd; }
-        #multiple { grid-area: mult; }
+        #multiply { grid-area: mult; }
         #minus { grid-area: minus; }
         #plus { grid-area: plus; }
+        #dot { grid-area: dot; }
 
         #percent { grid-area: perc; }
         #sign { grid-area: sign; }
@@ -154,7 +147,13 @@ class WebCalculator extends HTMLElement {
 
       </style>
     `;
-    
+    this.shadowRoot.firstElementChild.childNodes
+      .forEach(elem => elem.addEventListener("custom-event", this.calculator.keyEvent));
+    // this.shadowRoot
+    //   .querySelectorAll("calc-button")
+    //   .forEach(elem => elem.addEventListener("custom-event", e => {
+    //     this.calculator.keyEvent(e);
+    //   }));
   }
 }
 
