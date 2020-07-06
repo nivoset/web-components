@@ -4,6 +4,7 @@ const menuItems = [
 	{ address: "/attribute-input/index.html", label: "Attributes" },
 	{ address: "/template/index.html", label: "Template" },
 	{ address: "/slot/index.html", label: "Slot" },,
+	{ address: "/extend-element/index.html", label: "Extend standard element" },
 	{ address: "/css-effects/index.html", label: "css-effects" },
 	{ address: "/slot-advanced/index.html", label: "Advanced Slot" },
 	{ address: "/template-card/index.html", label: "Card Template" },

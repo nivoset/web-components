@@ -9,7 +9,38 @@
 </head>
 <body>
     <menu-bar>
-        <web-calculator theme="dark" layout="long"></web-calculator>
+        <button onclick="lightTheme()">Light Theme</button>
+        <button onclick="darkTheme()">Dark Theme</button>
+        <button onclick="customTheme()">Custom Theme</button>
+        <br/>
+        <button onclick="standardLayout()">standardLayout</button>
+        <button onclick="longLayout()">longLayout</button>
+        <web-calculator class="blue-theme"></web-calculator>
+
     </menu-bar>
 </body>
+<style>
+    .blue-theme {
+        --display-background-color: #008;
+        --display-text-color: white;
+
+        --button-background-color: #44f;
+        --button-text-color: black;
+
+        --operator-background-color: #00b;
+        --operator-text-color: white;
+
+        --grid-color: white;
+    }
+</style>
+<script>
+    const calculator = document.querySelector("web-calculator");
+    const lightTheme = () => calculator.theme = "light";
+    const darkTheme = () => calculator.theme = "dark";
+    const customTheme = () => calculator.theme = "custom";
+
+    const standardLayout = () => calculator.layout = "standard";
+    const longLayout = () => calculator.layout = "long";
+
+</script>
 </html>

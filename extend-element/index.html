@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Templated</title>
+    <script type="module" src="/menu/menu.js"></script>
+    <script src="./confirm-link.js"></script>
+</head>
+<body>
+    <menu-bar>
+
+      <a href="/index.html" is="confirm-link">Confirm link</a>
+      <a href="/index.html">Not Confirm link</a>
+      <confirm-link href="/index.html">this doesn't work though</confirm-link>
+
+    </menu-bar>
+</body>
+</html>
