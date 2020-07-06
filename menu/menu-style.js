@@ -29,7 +29,7 @@ export default `
         }
         .nav li{
             list-style: none;
-            padding: 16px 0;
+            padding: 8px 0;
         }
         .nav{
             padding: 0;
