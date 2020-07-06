@@ -45,7 +45,6 @@ export default class {
       this.current = `-${this.current}`
     this.fireUpdate("sign");
   }
-  get clear() { this.clear() }
   clear() {
     this.current = "0";
     this.previous = null;
