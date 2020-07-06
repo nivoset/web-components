@@ -6,7 +6,7 @@ customElements.define('calc-display',
       this.render();
     }
     get value() {
-        return this.getAttribute('value');
+        return this.getAttribute('value') || "";
     }
       
     set value(newValue) {
@@ -15,10 +15,9 @@ customElements.define('calc-display',
     static get observedAttributes() {
         return ['value'];
     }
-    attributeChangedCallback(name, oldValue, newValue) {
-        console.log(`${name} changed from ${oldValue} to ${newValue}`);
+    attributeChangedCallback() {
         this.render();
-      }
+    }
     render() {
         this.shadowRoot.innerHTML = `
             <style>

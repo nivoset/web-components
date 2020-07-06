@@ -5,33 +5,55 @@ customElements.define('calc-button',
       this.attachShadow({mode: 'open'});
       this.render();
     }
-    get value() {
-        return this.getAttribute('value');
-    }
-      
-    set value(newValue) {
-        this.setAttribute('value', newValue);
-    }
-    get operator() {
-        return this.getAttribute('operator') || "";
-    }
-      
-    set operator(newValue) {
-        this.setAttribute('operator', newValue);
-    }
+
     static get observedAttributes() {
-        return ['value', "operator"];
+      return ['value', "operator"];
     }
-    attributeChangedCallback(name, oldValue, newValue) {
-        console.log(`${name} changed from ${oldValue} to ${newValue}`);
-        this.render();
-      }
+
+    get value() {
+      return this.getAttribute('value');
+    }
+    set value(newValue) {
+      this.setAttribute('value', newValue);
+    }
+
+    get operator() {
+      return this.getAttribute('operator');
+    }
+    set operator(newValue) {
+      this.setAttribute('operator', (newValue !== null && newValue !== undefined) ? "operation" : "");
+    }
+    connectedCallback() { 
+      this.operator = this.getAttribute("operator");
+    }
+    attributeChangedCallback() {
+      this.render();
+    }
     render() {
-        this.shadowRoot.innerHTML = `
-            <style>
-            </style>
-            <h1 class="${this.operator}">${this.operator} -- ${this.value}</h1>
-          `
+      this.shadowRoot.innerHTML = `
+        <div class="${this.operator}">${this.value}</div>
+        <style>
+          div {
+            background-color: var(--button-background-color);
+            color: var(--button-text-color);
+            cursor: pointer;
+            text-align: center;
+            border: 1px solid #999;
+          }
+          .operation {
+            background-color: var(--operator-background-color);
+            color: var(--operator-text-color);
+          }
+          div::selection {
+            color: none;
+            background: none;
+          }
+        </style>
+        `
+      this.shadowRoot.firstElementChild.onclick = e => 
+        this.dispatchEvent(new CustomEvent("custom-event", {
+          detail: { key: this.value }
+        }));
     }
   }
 )

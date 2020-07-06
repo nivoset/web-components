@@ -1,117 +1,161 @@
-import getHtml from "./render.js"
+import Calculator from "./calculator.js"
+import "./calc-display.js";
 import "./calc-button.js";
 
 class WebCalculator extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: "open"});
-        this._value = "0";
-        window.test = this;
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open"});
+    this.render();
+    this.calculator = new Calculator(this.onUpdate());
+  }
+  static get observedAttributes() { return ["theme", "layout"]; }
+  attributeChangedCallback (name, oldValue, newValue) {
+    console.log(`${name} changed from ${oldValue} to ${newValue}`);
+    this.render();
+  }
+  get value () { return this.getAttribute("value") || "0"}
+  set value (newValue) { this.setAttribute("value", newValue) }
 
-        this.initialRender();
-        this.addEvents();
-        this.styleVariables = this.shadowRoot.querySelector(".calculator").style;
-    }
-    static get observedAttributes() {  return ["theme"]; }
+  get theme () { return this.getAttribute("theme") || "light"}
+  set theme (newValue) { this.setAttribute("theme", newValue) }
 
-    attributeChangedCallback (name, oldVal, newVal) {
-        console.log(`${name} changed to ${newVal} from ${oldVal}`)
-        switch (name) {
-            case "theme": 
-                switch (newVal) {
-                    case "dark":
-                        this.styleVariables.setProperty("--display-background-color", "#333");
-                        this.styleVariables.setProperty("--display-text-color", "white");
+  get layout () { return this.getAttribute("layout") || "standard"}
+  set layout (newValue) { this.setAttribute("layout", newValue) }
 
-                        this.styleVariables.setProperty("--button-background-color", " #353C51");
-                        this.styleVariables.setProperty("--button-text-color", "#fff");
-
-                        this.styleVariables.setProperty("--operator-background-color", "#aa5c00");
-                        this.styleVariables.setProperty("--operator-text-color", "white");
-
-                        break;
-                    default:
-                        this.styleVariables.setProperty("--display-background-color", "#333");
-                        this.styleVariables.setProperty("--display-text-color", "white");
-
-                        this.styleVariables.setProperty("--button-background-color", "#F2F2F2");
-                        this.styleVariables.setProperty("--button-text-color", "black");
-
-                        this.styleVariables.setProperty("--operator-background-color", "orange");
-                        this.styleVariables.setProperty("--operator-text-color", "white");
-                }
-                break;
-            
-        }
-    }
-    connectedCallback() { console.log("Added"); }
-    disconnectedCallback() { console.log("Removed"); }
-
-    addEvents() {
-        this.addButtonEvents();
-        this.addDotEvent();
-        this.addEqualEvent();
-        this.addOperatorsEvents();
-    }
-    addEqualEvent() {
-        this.shadowRoot.querySelector("#equal")
-            .addEventListener("click", () => console.log("Equals clicked"));
-    }
-    addOperatorsEvents() {
-
-        this.shadowRoot.querySelector("#minus")
-            .addEventListener("click", () => console.log("minus clicked"));
-        this.shadowRoot.querySelector("#add")
-            .addEventListener("click", () => console.log("add clicked"));
-        this.shadowRoot.querySelector("#divide")
-            .addEventListener("click", () => console.log("divide clicked"));
-        this.shadowRoot.querySelector("#multiply")
-            .addEventListener("click", () => console.log("multiply clicked"));
-        this.shadowRoot.querySelector("#percent")
-            .addEventListener("click", () => console.log("percent clicked"));
-        this.shadowRoot.querySelector("#sign")
-            .addEventListener("click", () => console.log("sign clicked"));
-        this.shadowRoot.querySelector("#clear")
-            .addEventListener("click", () => {
-                this._value = '0';
-                this.updateDisplay();
-            });
-    }
-    addDotEvent() {
-
-        const dot = () => {
-            if (this._value.indexOf('.') === -1) {
-                this.append('.');
-            }
-        }
-        this.shadowRoot.querySelector(`#dot`)
-                .addEventListener('click', dot);
-    }
-    append(number) {
-        if (this._value.indexOf(".") === -1 && this._value === '0') {
-            this._value = '';
-        }
-        if (this.operatorClicked) {
-            this._value = '';
-            this.operatorClicked = false;
-        }
-        this._value = `${this._value}${number}`;
-        this.updateDisplay();
-    }
-    addButtonEvents() {
-        const buttonEvent = (number) => () => this.append(number);
-        [...Array(10).keys()]
-            .forEach(i =>this.shadowRoot.querySelector(`#button-${i}`)
-                            .addEventListener('click', buttonEvent(i)));
-    }
-    updateDisplay() {
-        this.shadowRoot.querySelector(".display").textContent = this._value;
-    }
-    initialRender() {
-        this.shadowRoot.innerHTML = getHtml(this.theme || "light", this.layout, this.value)
-    }
-
+  connectedCallback() { 
+    console.log("Calculator added")
     
+    this.shadowRoot
+      .querySelectorAll("calc-button")
+      .forEach(elem => elem.addEventListener("custom-event", (this.calculator.keyEvent)));
+  }
+  disconnectedCallback() { console.log("Calculator removed")}
+
+  onUpdate() {
+    const display = this.shadowRoot.querySelector("calc-display")
+    return (value, change) => {
+      display.value = value;
+      this.dispatchEvent(new CustomEvent("update", {
+        detail: {
+          change,
+          value: this.current
+        }
+      }))
+    }
+  }
+
+  render() {
+    console.log(`${this.theme}\t${this.layout}\t${this.value}`)
+    this.shadowRoot.innerHTML = `
+      <div id="calculator" class="${this.theme} ${this.layout}">
+        <calc-display id="display"  value="${this.value}"></calc-display>
+        <calc-button id="clear"     value="C" operator></calc-button>
+        <calc-button id="sign"      value="+/-" operator></calc-button>
+        <calc-button id="percent"   value="%" operator></calc-button>
+
+        <calc-button id="plus"      value="+" operator></calc-button>
+        <calc-button id="minus"     value="-" operator></calc-button>
+        <calc-button id="multiply"  value="X" operator></calc-button>
+        <calc-button id="divide"    value="/" operator></calc-button>
+
+        <calc-button id="dot"       value="." operator></calc-button>
+        <calc-button id="equal"     value="=" operator></calc-button>
+
+        <calc-button id="button-0" value="0"></calc-button>
+        <calc-button id="button-1" value="1"></calc-button>
+        <calc-button id="button-2" value="2"></calc-button>
+        <calc-button id="button-3" value="3"></calc-button>
+        <calc-button id="button-4" value="4"></calc-button>
+        <calc-button id="button-5" value="5"></calc-button>
+        <calc-button id="button-6" value="6"></calc-button>
+        <calc-button id="button-7" value="7"></calc-button>
+        <calc-button id="button-8" value="8"></calc-button>
+        <calc-button id="button-9" value="9"></calc-button>
+
+      </div>
+      <style scoped>
+        :root {
+          --grid-color: black;
+        }
+        .dark {
+          --display-background-color: #333;
+          --display-text-color: white;
+
+          --button-background-color: #353c51;
+          --button-text-color: white;
+
+          --operator-background-color: #aa5c00;
+          --operator-text-color: white;
+
+          --grid-color: black;
+        }
+        .light {
+          --display-background-color: #333;
+          --display-text-color: white;
+
+          --button-background-color: #f2f2f2;
+          --button-text-color: black;
+
+          --operator-background-color: orange;
+          --operator-text-color: white;
+
+          --grid-color: black;
+        }
+        #calculator {
+          font-size: 40px;
+          display: grid;
+          background-color: var(--grid-color);
+          margin: 0 auto;
+          grid-auto-rows: minmax(50px, auto);
+        }
+        .standard {
+          width: 400px;
+          grid-template-columns: repeat(4, 1fr);
+          grid-template-areas:
+            "disp disp disp disp"
+            "clr  sign perc divd"
+            "sevn eght nine mult"
+            "four five six  minus"
+            "one  two  thre plus"
+            "zero zero dot  eql "
+        }
+        .long {
+          width: 500px;
+          grid-template-columns: repeat(4, 1fr);
+          grid-template-areas:
+            "disp disp disp disp disp"
+            "sevn eght nine clr  perc"
+            "four five six  mult divd"
+            "one  two  thre plus minus"
+            "zero zero dot  eql  eql "
+        }
+        #display { grid-area: disp; }
+        #divide { grid-area: divd; }
+        #multiple { grid-area: mult; }
+        #minus { grid-area: minus; }
+        #plus { grid-area: plus; }
+
+        #percent { grid-area: perc; }
+        #sign { grid-area: sign; }
+        #clear { grid-area: clr; }
+        #equal { grid-area: eql; }
+        
+        #button-0 { grid-area: zero; }
+        #button-1 { grid-area: one; }
+        #button-2 { grid-area: two; }
+        #button-3 { grid-area: thre; }
+        #button-4 { grid-area: four; }
+        #button-5 { grid-area: five; }
+        #button-6 { grid-area: six; }
+        #button-7 { grid-area: sevn; }
+        #button-8 { grid-area: eght; }
+        #button-9 { grid-area: nine; }
+
+      </style>
+    `;
+    
+  }
 }
 
-window.customElements.define("web-calculator", WebCalculator);
+customElements.define("web-calculator", WebCalculator)
