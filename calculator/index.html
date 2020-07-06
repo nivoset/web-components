@@ -9,14 +9,21 @@
 </head>
 <body class="blue-theme">
     <menu-bar>
-        <button onclick="lightTheme()">Light Theme</button>
-        <button onclick="darkTheme()">Dark Theme</button>
-        <button onclick="customTheme()">Custom Theme</button>
+        <button onclick="lightTheme(0)">Light Theme</button>
+        <button onclick="darkTheme(0)">Dark Theme</button>
+        <button onclick="customTheme(0)">Custom Theme</button>
         <br/>
-        <button onclick="standardLayout()">standardLayout</button>
-        <button onclick="longLayout()">longLayout</button>
+        <button onclick="standardLayout(0)">standardLayout</button>
+        <button onclick="longLayout(0)">longLayout</button>
+        <web-calculator></web-calculator>
         <web-calculator></web-calculator>
 
+        <button onclick="lightTheme(1)">Light Theme</button>
+        <button onclick="darkTheme(1)">Dark Theme</button>
+        <button onclick="customTheme(1)">Custom Theme</button>
+        <br/>
+        <button onclick="standardLayout(1)">standardLayout</button>
+        <button onclick="longLayout(1)">longLayout</button>
     </menu-bar>
 </body>
 <style>
@@ -34,13 +41,13 @@
     }
 </style>
 <script>
-    const calculator = document.querySelector("web-calculator");
-    const lightTheme = () => calculator.theme = "light";
-    const darkTheme = () => calculator.theme = "dark";
-    const customTheme = () => calculator.theme = "custom";
+    const calculator = document.querySelectorAll("web-calculator");
+    const lightTheme = num => calculator[num].theme = "light";
+    const darkTheme = num => calculator[num].theme = "dark";
+    const customTheme = num => calculator[num].theme = "custom";
 
-    const standardLayout = () => calculator.layout = "standard";
-    const longLayout = () => calculator.layout = "long";
+    const standardLayout = num => calculator[num].layout = "standard";
+    const longLayout = num => calculator[num].layout = "long";
 
 </script>
 </html>
