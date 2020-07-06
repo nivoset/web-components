@@ -2,7 +2,7 @@
 
 export default (theme, layout, value) => `
         <div class="calculator ${theme} ${layout}">
-            <div class="display">${value}</div>
+            <calc-display>${value}</calc-display>
             <div id="clear" class="btn">C</div>
             <div id="sign" class="btn">+/-</div>
             <div id="percent" class="btn">%</div>
@@ -57,10 +57,8 @@ export default (theme, layout, value) => `
                 grid-auto-rows: minmax(50px, auto);
                 background-color: black;
             }
-            .display {
-                grid-column: 1 / 5;
-                background-color: var(--display-background-color);
-                color: var(--display-text-color);
+            calc-display {
+                grid-column: 1/5;
             }
             .zero {
                 grid-column: 1 / 3;

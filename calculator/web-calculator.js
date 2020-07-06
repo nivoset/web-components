@@ -1,4 +1,5 @@
 import getHtml from "./render.js"
+import "./calc-button.js";
 
 class WebCalculator extends HTMLElement {
     constructor() {
