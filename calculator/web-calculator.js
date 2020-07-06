@@ -67,9 +67,6 @@ class WebCalculator extends HTMLElement {
 
       </div>
       <style scoped>
-        :root {
-          --grid-color: black;
-        }
         .dark {
           --display-background-color: #333;
           --display-text-color: white;
@@ -149,11 +146,6 @@ class WebCalculator extends HTMLElement {
     `;
     this.shadowRoot.firstElementChild.childNodes
       .forEach(elem => elem.addEventListener("custom-event", this.calculator.keyEvent));
-    // this.shadowRoot
-    //   .querySelectorAll("calc-button")
-    //   .forEach(elem => elem.addEventListener("custom-event", e => {
-    //     this.calculator.keyEvent(e);
-    //   }));
   }
 }
 

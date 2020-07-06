@@ -35,22 +35,22 @@ export default class {
       }
     }
   }
-  fireUpdate(change) {
-    if (this.onUpdate) this.onUpdate(this.current, change);
+  fireUpdate() {
+    if (this.onUpdate) this.onUpdate(this.current);
   }
   sign() {
     if (this.current.includes("-"))
       this.current = this.current.slice(1);
     else
       this.current = `-${this.current}`
-    this.fireUpdate("sign");
+    this.fireUpdate();
   }
   clear() {
     this.current = "0";
     this.previous = null;
     this.operator = null;
     this.clearOnType = true;
-    this.fireUpdate("clear");
+    this.fireUpdate();
   }
   addDigit(digit) {
     if (this.clearOnType) {
@@ -58,7 +58,7 @@ export default class {
       this.clearOnType = false;
     }
     this.current = `${this.current}${digit}`;
-    this.fireUpdate(digit);
+    this.fireUpdate();
   }
   addDot() {
     if (!this.current.includes('.')) {
@@ -74,11 +74,11 @@ export default class {
     this.previous = this.current;
     this.current = "0";
     this.clearOnType = true;
-    this.fireUpdate(operation);
+    this.fireUpdate();
   }
   percent() {
     this.current = `${parseFloat(this.current/100)}`;
-    this.fireUpdate("%");
+    this.fireUpdate();
   }
   equals() {
     if (this.previous === null || !OPERATIONS.has(this.operator)) return;
@@ -91,7 +91,7 @@ export default class {
     this.previous = null;
     this.operator = null;
     this.clearOnType = true;
-    this.fireUpdate("=");
+    this.fireUpdate();
   }
   backspace() {
     this.current = this.current.slice(0,-1);
