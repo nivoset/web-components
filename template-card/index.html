@@ -5,165 +5,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Templated</title>
     <script type="module" src="/menu/menu.js"></script>
-    <script src="./component.js"></script>
 </head>
 <body>
-    <template id="card-template">
-        <style scoped>
-            .card {
-                --base-grid: 8px;
-                --colour-body-background: #22303f;
-                --colour-background: #fff;
-                --colour-text: #aaa;
-            }
-
-            *, :after, :before {
-                box-sizing: border-box;
-                margin: 0;
-            }
-
-            .articles {
-                margin: 
-                    calc(var(--base-grid)*2) 
-                    auto 
-                    calc(var(--base-grid)*5);
-                display: grid;
-                grid-row-gap: calc(var(--base-grid)*8);
-                grid-column-gap: calc(var(--base-grid)*6);
-                grid-template-columns: repeat(
-                    auto-fit,
-                    minmax(calc(var(--base-grid)*35),1fr));
-                justify-items: center;
-            }
-
-            .card {
-                cursor: pointer;
-                display: block;
-                position: relative;
-                perspective: 1000px;
-                animation-name: animateIn;
-                animation-duration: .35s;
-                animation-delay: calc(var(--animation-order)*100ms);
-                animation-fill-mode: both;
-                animation-timing-function: ease-in-out;
-                background: repeating-linear-gradient(
-                    45deg,
-                    #606dbc,
-                    #606dbc 10px,
-                    #465298 10px,
-                    #465298 20px
-                    );
-            }
-
-            .card:before {
-                content: "";
-                position: absolute;
-                top: calc(var(--base-grid)*-2);
-                left: calc(var(--base-grid)*-2);
-                border: 2px dashed var(--colour-background);
-                background-image: repeating-linear-gradient(-24deg,transparent,transparent 4px,var(--colour-background-stripes) 0, var(--colour-background-stripes) 5px);
-                z-index: -1;
-            }
-
-            .card,
-            .card:before {
-                width: calc(var(--base-grid)*35);
-                height: calc(var(--base-grid)*35);
-            }
-
-            .articles__link {
-                /* background-color: var(--colour-body-background); */
-                border: 2px solid var(--colour-background);
-                display: block;
-                width: 100%;
-                height: 100%;
-            }
-
-            .articles__link:after {
-                content: "";
-                position: absolute;
-                top: 50%;
-                right: calc(var(--base-grid)*3);
-                width: calc(var(--base-grid)*2);
-                height: calc(var(--base-grid)*2);
-                margin-top: calc(var(--base-grid)*-1);
-                clip-path: polygon(75% 0,100% 50%,75% 100%,0 100%,25% 50%,0 0);
-                -webkit-clip-path: polygon(75% 0,100% 50%,75% 100%,0 100%,25% 50%,0 0);
-                background-color: var(--colour-background);
-                opacity: 0;
-                transition: opacity .5s ease-in,transform .3s ease-in-out 0ms;
-            }
-
-            .articles__content {
-                /* background-color: var(--colour-background); */
-                color: var(--colour-text);
-                position: absolute;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                left: 0;
-                padding: calc(var(--base-grid)*2);
-                display: flex;
-                flex-direction: column;
-                border: 2px solid var(--colour-background);
-            }
-
-            .articles__content--lhs {
-                clip-path: polygon(0 0,51% 0,51% 100%,0 100%);
-                -webkit-clip-path: polygon(0 0,51% 0,51% 100%,0 100%);
-            }
-
-            .articles__content--rhs {
-                clip-path: polygon(50% 0,100% 0,100% 100%,50% 100%);
-                -webkit-clip-path: polygon(50% 0,100% 0,100% 100%,50% 100%);
-                transition: transform .5s ease-in-out,background-color .4s ease-in-out;
-            }
-
-            .articles__title {
-                font-size: calc(var(--base-grid)*4);
-                line-height: 1.125;
-                font-weight: 700;
-                letter-spacing: -.02em;
-            }
-
-            .articles__footer {
-                margin-top: auto;
-                font-size: calc(var(--base-grid)*2);
-                line-height: calc(var(--base-grid)*2);
-                display: flex;
-                justify-content: space-between;
-            }
-
-            .articles__link:hover .articles__content--rhs {
-                background-color: var(--colour-background-folded);
-                transform: rotateY(-50deg);
-            }
-
-            .articles__link:hover:after {
-                opacity: 1;
-                transform: translateX(calc(var(--base-grid)*1.5));
-                transition: opacity .5s ease-in,transform .3s ease-in-out .25s;
-            }
-        </style>
-        <div class="card">
-            <a class="articles__link"></a>
-            <div class="articles__content articles__content--lhs">
-                <h2 class="articles__title"><slot name="title"></slot></h2>
-                <div class="articles__footer">
-                    <p><slot name="category"></slot></p>
-                    <time><slot name="date"></slot></time>
-                </div>
-          </div>
-        </div>
-    </template>
     <menu-bar>
 
         <card-template>
-            <div slot="title">Sweet roll gingerbread sweet roll jelly</div>
-            <div slot="category">Cakes</div>
-            <div slot="date">1 Jan 2020</div>
+            <img slot="image" src="./jedi-logo.svg" alt="Avatar" style="width: 100%"></img>
+            <div slot="name">OCS</div>
+            <div slot="title">Everyone</div>
+        </card-template>
+
+        <card-template>
+            <img slot="image" src="./jedi-logo.svg" alt="Avatar" style="width: 100%"></img>
+            <div slot="name">Jedi Scrum</div>
+            <div slot="title">Scrum Team</div>
+        </card-template>
+
+        <card-template>
+            <img slot="image" src="./raptor_pack.jpg" alt="Avatar" style="width: 100%"></img>
+            <div slot="name">Raptor Pack</div>
+            <div slot="title">Scrum Team</div>
         </card-template>
 
     </menu-bar>
+
+    
+    <template id="card-template">
+        <style scoped>
+            .card {
+                /* Add shadows to create the "card" effect */
+                box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+                transition: 0.3s;
+                border-radius: 5px; /* 5px rounded corners */
+                width: 150px;
+                float: left;
+            }
+            
+            /* On mouse-over, add a deeper shadow */
+            .card:hover {
+                box-shadow: 0 8px 16px 0 rgba(0,0,0,0.7);
+            }
+            
+            /* Add some padding inside the card container */
+            .container {
+                padding: 2px 16px;
+            }
+            
+            /* Add rounded corners to the top left and the top right corner of the image */
+            .img-holder {
+                width: 130px;
+                height: 130px;
+                padding-top: 10px;
+                padding-left: 10px;
+            }
+            img {
+                border-radius: 5px 5px 0 0;
+                width: 130px;
+            }
+        </style>
+        <div class="card">
+            <div class="img-holder">
+                <slot name="image"></slot>
+            </div>
+            <div class="container">
+                <h4><b><slot name="name"></slot></b></h4>
+                <p><slot name="title"></slot></p>
+            </div>
+        </div>
+    </template>
+    <script src="./component.js"></script>
 </body>
 </html>

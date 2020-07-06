@@ -2,10 +2,9 @@
 class CardTemplate extends HTMLElement {
 	constructor() {
 		super();
-		let template = document.getElementById('card-template');
-		let templateContent = template.content;
+		const {content} = document.querySelector('#card-template');
 		this.attachShadow({mode: 'open'})
-			.appendChild(templateContent.cloneNode(true));
+			.appendChild(content.cloneNode(true));
 	}
 }
 
